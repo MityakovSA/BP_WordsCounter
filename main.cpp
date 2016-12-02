@@ -34,11 +34,11 @@ int main(int argc, char** argv)
     {
         os << token << std::endl;
         os << "get_groups -v" << std::endl;
-        os << "1" << std::endl;
+        os << "4" << std::endl;
         os << "close" << std::endl;
         std::string line;
         std::cmatch sm;
-        std::regex mask("\\S+\\s*");
+        std::regex mask("\\w+\\s*");
         int w_count = 0;
         while (std::getline(is, line))
         {
