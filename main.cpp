@@ -34,20 +34,19 @@ int main(int argc, char** argv)
     {
         os << token << std::endl;
         os << "get_groups -v" << std::endl;
-        os << "4" << std::endl;
+        os << "1" << std::endl;
         os << "close" << std::endl;
         std::string line;
-        std::smatch sm;
-        std::regex mask("//w+//s*");
+        std::cmatch sm;
+        std::regex mask("\\S+\\s*");
         int w_count = 0;
         while (std::getline(is, line))
         {
-            while (std::regex_search(line, sm, mask))
+            while (std::regex_search(line.c_str(), sm, mask))
             {
                 w_count++;
                 line = sm.suffix().str();
             }
-            //std::cout << line << std::endl;
         }
         bp::status s = c.wait();
         std::cout << "Total words number: " << w_count << std::endl;
