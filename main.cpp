@@ -12,7 +12,7 @@ bp::child start_child(const std::string& path)
 {
     std::string exec = path;
     std::vector<std::string> args;
-    args.push_back("--version");
+    args.push_back("");
     bp::context ctx;
     ctx.stdout_behavior = bp::capture_stream();
     ctx.stdin_behavior = bp::capture_stream();
@@ -23,8 +23,7 @@ bp::child start_child(const std::string& path)
 int main(int argc, char** argv)
 {
     if (argc != 2) return 123;
-    std::string _path;
-    _path = argv[1];
+    std::string _path(argv[1]);
     bp::child c = start_child(_path);
     bp::postream &os = c.get_stdin();
     bp::pistream &is = c.get_stdout();
@@ -37,12 +36,12 @@ int main(int argc, char** argv)
         os << "4" << std::endl;
         os << "close" << std::endl;
         std::string line;
-        std::cmatch sm;
+        std::smatch sm;
         std::regex mask("\\w+\\s*");
         int w_count = 0;
         while (std::getline(is, line))
         {
-            while (std::regex_search(line.c_str(), sm, mask))
+            while (std::regex_search(line, sm, mask))
             {
                 w_count++;
                 line = sm.suffix().str();
